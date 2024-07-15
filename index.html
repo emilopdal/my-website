@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klokke</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-top: 20px;
+        }
+        #search-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        #search-input {
+            width: 200px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        #search-results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #search-results li {
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 220px;
+            text-align: center;
+        }
+        #image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+        #image-container img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Klokke</h1>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Søk etter klokke...">
+    </div>
+    <ul id="search-results"></ul>
+    <div id="image-container"></div>
+
+    <script>
+        const watches = [
+            { name: "Big Bang Mod", image: "images/big_bang_mod.jpg" },
+            { name: "Two Tone Explorer Mod", image: "images/two_tone_explorer_mod.jpg" },
+            { name: "Blu Arabic", image: "images/blu_arabic.jpg" }
+        ];
+
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+        const imageContainer = document.getElementById("image-container");
+
+        searchInput.addEventListener("input", function() {
+            const query = searchInput.value.toLowerCase();
+            searchResults.innerHTML = "";
+            if (query) {
+                const filteredWatches = watches.filter(watch => watch.name.toLowerCase().includes(query));
+                filteredWatches.forEach(watch => {
+                    const li = document.createElement("li");
+                    li.textContent = watch.name;
+                    li.addEventListener("click", () => displayImage(watch.image));
+                    searchResults.appendChild(li);
+                });
+            }
+        });
+
+        function displayImage(imagePath) {
+            imageContainer.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = imagePath;
+            imageContainer.appendChild(img);
+        }
+    </script>
+</body>
+</html>
